@@ -37,7 +37,7 @@ public class JanggiPieceService {
         }
         Map<JanggiPosition, JanggiChessPiece> result = new HashMap<>();
         for (PieceEntity entity : all) {
-            JanggiChessPiece piece = entity.createPiece();
+            JanggiChessPiece piece = entity.toPiece();
             result.put(JanggiPositionFactory.of(entity.row(), entity.col()), piece);
         }
         return new JanggiPositions(result);
@@ -58,10 +58,10 @@ public class JanggiPieceService {
     }
 
     public void move(final JanggiPosition from, final JanggiPosition to) {
-        PieceEntity pieceEntity = pieceDao.findByPosition(from).get();
+        JanggiChessPiece piece = janggiPositions.getJanggiPieceByPosition(from);
         janggiPositions.move(from, to);
         pieceDao.deleteByPosition(from);
-        pieceDao.save(pieceEntity.move(to));
+        pieceDao.save(PieceEntity.of(to, piece));
     }
 
     public void kill(final JanggiPosition targetPosition) {

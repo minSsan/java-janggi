@@ -11,11 +11,16 @@ public record PieceEntity(
         JanggiTeam team,
         Piece type
 ) {
-    public PieceEntity move(JanggiPosition to) {
-        return new PieceEntity(to.getRow(), to.getCol(), team, type);
+    public static PieceEntity of(JanggiPosition position, JanggiChessPiece piece) {
+        return new PieceEntity(
+                position.getRow(),
+                position.getCol(),
+                piece.getTeam(),
+                piece.getChessPieceType()
+        );
     }
 
-    public JanggiChessPiece createPiece() {
+    public JanggiChessPiece toPiece() {
         return type().create(team);
     }
 
