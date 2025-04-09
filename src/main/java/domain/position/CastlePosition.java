@@ -5,16 +5,16 @@ import domain.direction.Direction;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class CastlePosition extends JanggiPosition {
+public final class CastlePosition extends JanggiPosition {
     private final List<Direction> directions;
 
-    protected CastlePosition(int row, int col, Direction... linked) {
+    public CastlePosition(int row, int col, Direction... linked) {
         super(row, col);
         this.directions = Stream.concat(defaultDirections.stream(), Stream.of(linked)).toList();
     }
 
     @Override
-    public final boolean isCastle() {
+    public boolean isCastle() {
         return true;
     }
 
