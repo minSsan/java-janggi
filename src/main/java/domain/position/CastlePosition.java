@@ -2,17 +2,15 @@ package domain.position;
 
 import domain.direction.Direction;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class CastlePosition extends JanggiPosition {
     private final List<Direction> directions;
 
     protected CastlePosition(int row, int col, Direction... linked) {
         super(row, col);
-        this.directions = new ArrayList<>(defaultDirections);
-        this.directions.addAll(List.of(linked));
+        this.directions = Stream.concat(defaultDirections.stream(), Stream.of(linked)).toList();
     }
 
     @Override
@@ -22,6 +20,6 @@ public class CastlePosition extends JanggiPosition {
 
     @Override
     protected List<Direction> getLinkedDirections() {
-        return Collections.unmodifiableList(directions);
+        return directions;
     }
 }
